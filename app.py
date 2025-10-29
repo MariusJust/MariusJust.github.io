@@ -1,6 +1,4 @@
 from flask import Flask, render_template
-import os
-
 
 app = Flask(__name__)
 app.config['EXPLAIN_TEMPLATE_LOADING'] = True 
@@ -14,3 +12,7 @@ def index():
 @app.route('/neuralnet')
 def neuralnet():
     return render_template("NeuralNet.html")
+
+@app.route('/DGPE_Køge')
+def dgpe_koege():
+    return render_template("DGPE.html")
