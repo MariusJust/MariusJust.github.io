@@ -10,10 +10,10 @@ function loadFile(filePath) {
   console.log("load")
   return result;
 }
-frags = loadFile(`/static/slides/DGPE-Køge/video_slides/${slide}.txt`)
+frags = loadFile(`/static/slides/DGPE/video_slides/videos/${slide}.txt`)
 document.write(`
 <section 
-	data-background-video="/static/slides/DGPE-Køge/video_slides/${slide}.mp4" 
+	data-background-video="/static/slides/DGPE/video_slides/videos/${slide}.mp4" 
 	data-background-size="contain"
 	data-background-color="#101518" 
 	id="vid" 
