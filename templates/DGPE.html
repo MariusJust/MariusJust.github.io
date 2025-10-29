@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Title</title>
+
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/reset.css') }} ">
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/reveal.css') }} ">
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/theme/white.css') }} ">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/plugin/highlight/monokai.css') }} ">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Title"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide1"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide2"></script>
+				<!-- <script src="js/add_video_slide.js" slide_scene="Slide2"></script>
+				<script src="js/add_video_slide.js" slide_scene="Slide3"></script>
+				<script src="js/add_video_slide.js" slide_scene="Conclusion"></script>
+				<script src="js/add_video_slide.js" slide_scene="TheEnd"></script> -->
+				<section id="plot-slide">
+					<div class="slide-header">
+						<h2>My Plotly Animation</h2>
+						<div class="controls">
+						Hand controls are optional — clicker will still work
+						<button id="playBtn">Play</button>
+						<button id="pauseBtn">Pause</button>
+						</div>
+					</div>
+
+					<div class="iframe-wrap">
+						<iframe
+						id="plot-iframe"
+						src=" {{ url_for('static',filename='slides/DGPE/assets/html/(8,2,2)_dynamic_IC.html') }} "
+						title="Dynamic Plot"
+						sandbox="allow-scripts allow-same-origin"
+						></iframe>
+					</div>
+				</section>
+
+
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide3"></script>
+
+			</div>
+			</div>
+			</div>
+		</div>
+
+		<style>
+			/* Make the section a column layout so header + iframe stack */
+			#plot-slide {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			box-sizing: border-box;
+			}
+
+			/* make header compact: fixed height, remove h2 margins */
+			.slide-header{
+			display:flex;
+			justify-content:space-between;
+			align-items: center;
+			height: 72px;            /* reserve fixed header height */
+			min-height: 56px;
+			flex: 0 0 72px;         /* do not stretch */
+			padding: 0 0.4rem;
+			
+			box-sizing: border-box;
+			}
+
+			/* tighten h2 so it doesn't push layout */
+			.slide-header h2{
+			margin: 0;
+			font-size: 2.2rem;      /* reduce if too large */
+			line-height: 1;
+			}
+
+			/* iframe wrapper fills the remaining space */
+			.iframe-wrap {
+			flex: 1 1 auto;         /* take the remaining vertical space */
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			box-sizing: border-box;
+			overflow: hidden;
+			padding-top: 0.5rem;
+			height: 100%;
+			}
+
+			/* iframe itself fills wrapper exactly */
+			#plot-iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+			border-radius: 6px;
+			display: block;
+			background: #FFFFFF;
+			}
+			</style>
+
+
+
+		<script src=" {{ url_for('static',filename='slides/DGPE/dist/reveal.js') }} "></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/notes/notes.js') }} "></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/markdown/markdown.js') }} "></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/highlight/highlight.js') }} "></script>
+		<script>
+		
+			const isMobile = /(iphone|ipod|ipad|android)/gi.test( navigator.userAgent ) ||
+				( navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1 ); // iPadOS
+				
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				transition: 'none',
+				backgroundTransition: 'none',	
+				progress: false,	
+				autoPlayMedia: false,	
+				controls: isMobile,
+				controlsLayout: 'edges',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			
+		</script>
+		<script>
+		const iframe = document.getElementById('plot-iframe');
+
+			
+			iframe.addEventListener('load', () => {
+
+			
+			setTimeout(() => {
+				const { width, height } = getdims(iframe);
+				iframe.contentWindow.postMessage({ action: 'init', width, height, ts: Date.now() }, '*');
+				console.log('parent: sent init to iframe', { width, height });
+			}, 1000); 
+
+			});
+
+			function getdims(frame){
+				  const wrapper = document.querySelector('.iframe-wrap') || frame;
+					const rect = wrapper.getBoundingClientRect();
+					const width = Math.floor(rect.width) || 0;
+					const height = Math.floor(rect.height) || 0;
+					console.log("width", width)
+
+				return {width, height}
+
+			}
+ 
+  
+	</script>
+
+
+		<script src=" {{ url_for('static',filename='slides/DGPE/js/video_slide.js') }} "></script>
+	</body>
+</html>
