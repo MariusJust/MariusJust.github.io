@@ -6,22 +6,24 @@
 
 		<title>Title</title>
 
-		<link rel="stylesheet" href="dist/reset.css">
-		<link rel="stylesheet" href="dist/reveal.css">
-		<link rel="stylesheet" href="dist/theme/white.css">
- 
+			<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/reset.css') }} ">
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/reveal.css') }} ">
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/theme/white.css') }} ">
+
+
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+				<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/plugin/highlight/monokai.css') }} ">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<script src="js/add_video_slide.js" slide_scene="Title"></script>
-				<script src="js/add_video_slide.js" slide_scene="Motivation"></script>
-				<script src="js/add_video_slide.js" slide_scene="Motivation2"></script>
-				<script src="js/add_video_slide.js" slide_scene="Motivation3"></script>
-				<script src="js/add_video_slide.js" slide_scene="Data"></script>
-				<script src="js/add_video_slide.js" slide_scene="NN"></script>
+				
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Title"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation2"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation3"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Data"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide2"></script>
 				<!-- <script src="js/add_video_slide.js" slide_scene="Slide2"></script>
 				<script src="js/add_video_slide.js" slide_scene="Slide3"></script>
 				<script src="js/add_video_slide.js" slide_scene="Conclusion"></script>
@@ -39,7 +41,7 @@
 					<div class="iframe-wrap">
 						<iframe
 						id="plot-iframe"
-						src="assets/html/(8,2,2)_dynamic_IC.html"
+				    	src=" {{ url_for('static',filename='slides/DGPE/assets/html/(8,2,2)_dynamic_IC.html') }} "
 						title="Dynamic Plot"
 						sandbox="allow-scripts allow-same-origin"
 						></iframe>
@@ -47,7 +49,7 @@
 				</section>
   
  
-				<script src="js/add_video_slide.js" slide_scene="Slide3"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide3"></script>
 				 
  
 			</div>
@@ -109,10 +111,10 @@
 
 
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
-		<script src="plugin/markdown/markdown.js"></script>
-		<script src="plugin/highlight/highlight.js"></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/dist/reveal.js') }} "></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/notes/notes.js') }} "></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/markdown/markdown.js') }} "></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/highlight/highlight.js') }} "></script>
 		<script>
 		
 			const isMobile = /(iphone|ipod|ipad|android)/gi.test( navigator.userAgent ) ||
@@ -176,7 +178,7 @@
 		</script>
 			
 	
-			<script src="js/video_slide.js"></script>
+		<script src=" {{ url_for('static',filename='slides/DGPE/js/video_slide.js') }} "></script>
 		</body>
 	</html>
 	  
