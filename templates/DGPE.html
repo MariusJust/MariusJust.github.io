@@ -6,46 +6,50 @@
 
 		<title>Title</title>
 
-		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/reset.css') }} ">
-		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/reveal.css') }} ">
-		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/dist/theme/white.css') }} ">
-
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+ 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/DGPE/plugin/highlight/monokai.css') }} ">
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Title"></script>
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide1"></script>
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide2"></script>
+				<script src="js/add_video_slide.js" slide_scene="Title"></script>
+				<script src="js/add_video_slide.js" slide_scene="Motivation"></script>
+				<script src="js/add_video_slide.js" slide_scene="Motivation2"></script>
+				<script src="js/add_video_slide.js" slide_scene="Motivation3"></script>
+				<script src="js/add_video_slide.js" slide_scene="Data"></script>
+				<script src="js/add_video_slide.js" slide_scene="NN"></script>
 				<!-- <script src="js/add_video_slide.js" slide_scene="Slide2"></script>
 				<script src="js/add_video_slide.js" slide_scene="Slide3"></script>
 				<script src="js/add_video_slide.js" slide_scene="Conclusion"></script>
 				<script src="js/add_video_slide.js" slide_scene="TheEnd"></script> -->
 				<section id="plot-slide">
 					<div class="slide-header">
-						<h2>My Plotly Animation</h2>
+						<h2>Dynamic model</h2>
 						<div class="controls">
 						Hand controls are optional — clicker will still work
 						<button id="playBtn">Play</button>
 						<button id="pauseBtn">Pause</button>
 						</div>
-					</div>
+					</div> 
 
 					<div class="iframe-wrap">
 						<iframe
 						id="plot-iframe"
-						src=" {{ url_for('static',filename='slides/DGPE/assets/html/(8,2,2)_dynamic_IC.html') }} "
+						src="assets/html/(8,2,2)_dynamic_IC.html"
 						title="Dynamic Plot"
 						sandbox="allow-scripts allow-same-origin"
 						></iframe>
 					</div>
 				</section>
-
-
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide3"></script>
-
+  
+ 
+				<script src="js/add_video_slide.js" slide_scene="Slide3"></script>
+				 
+ 
 			</div>
 			</div>
 			</div>
@@ -105,10 +109,10 @@
 
 
 
-		<script src=" {{ url_for('static',filename='slides/DGPE/dist/reveal.js') }} "></script>
-		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/notes/notes.js') }} "></script>
-		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/markdown/markdown.js') }} "></script>
-		<script src=" {{ url_for('static',filename='slides/DGPE/plugin/highlight/highlight.js') }} "></script>
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
 		<script>
 		
 			const isMobile = /(iphone|ipod|ipad|android)/gi.test( navigator.userAgent ) ||
@@ -132,35 +136,47 @@
 			
 		</script>
 		<script>
+
+			// parent: post init only when slide is visible and wrapper non-zero
 		const iframe = document.getElementById('plot-iframe');
+		const wrapper = document.querySelector('.iframe-wrap') || iframe;
 
-			
-			iframe.addEventListener('load', () => {
+		function postInitIfReady() {
+		const r = wrapper.getBoundingClientRect();
+		if (r.width > 0 && r.height > 0) {
+			iframe.contentWindow.postMessage({ action:'init', width:Math.floor(r.width), height:Math.floor(r.height) }, '*');
+			console.log('parent: posted init', {w:r.width,h:r.height});
+			return true;
+		}
+		console.log('parent: wrapper still zero, skipping init', {w:r.width,h:r.height});
+		return false;
+		}
 
-			
-			setTimeout(() => {
-				const { width, height } = getdims(iframe);
-				iframe.contentWindow.postMessage({ action: 'init', width, height, ts: Date.now() }, '*');
-				console.log('parent: sent init to iframe', { width, height });
-			}, 1000); 
-
-			});
-
-			function getdims(frame){
-				  const wrapper = document.querySelector('.iframe-wrap') || frame;
-					const rect = wrapper.getBoundingClientRect();
-					const width = Math.floor(rect.width) || 0;
-					const height = Math.floor(rect.height) || 0;
-					console.log("width", width)
-
-				return {width, height}
-
+		// call when reveal slidechanged to this slide
+		Reveal.on('slidechanged', ev => {
+		if (ev.currentSlide && ev.currentSlide.querySelector && ev.currentSlide.querySelector('#plot-iframe')) {
+			// try immediately; if wrapper 0, try again on next animation frame (small loop)
+			if (!postInitIfReady()) {
+			// small poll loop — will try a few times
+			let tries = 6;
+			(function poll() {
+				const r = wrapper.getBoundingClientRect();
+				if (r.width > 0 && r.height > 0) { postInitIfReady(); return; }
+				if (--tries <= 0) { console.warn('parent: init aborted — wrapper stayed zero'); return; }
+				requestAnimationFrame(() => setTimeout(poll, 80));
+			})();
 			}
- 
+		}
+		});
+
+		
   
-	</script>
-
-
-		<script src=" {{ url_for('static',filename='slides/DGPE/js/video_slide.js') }} "></script>
-	</body>
-</html>
+		  
+	
+		</script>
+			
+	
+			<script src="js/video_slide.js"></script>
+		</body>
+	</html>
+	  
