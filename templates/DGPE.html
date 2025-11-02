@@ -21,22 +21,49 @@
 				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Title"></script>
 				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation"></script>
 				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation2"></script>
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation3"></script>
 				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Data"></script>
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide2"></script>
-				<!-- <script src="js/add_video_slide.js" slide_scene="Slide2"></script>
-				<script src="js/add_video_slide.js" slide_scene="Slide3"></script>
-				<script src="js/add_video_slide.js" slide_scene="Conclusion"></script>
-				<script src="js/add_video_slide.js" slide_scene="TheEnd"></script> -->
-				<section id="plot-slide">
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Motivation3"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="NN"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="NN2"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Training"></script>
+
+
+					<section id="plot-slide">
 					<div class="slide-header">
-						<h2>Dynamic model</h2>
+						<h2>Results</h2>
 						<div class="controls">
 						Hand controls are optional — clicker will still work
 						<button id="playBtn">Play</button>
 						<button id="pauseBtn">Pause</button>
 						</div>
 					</div> 
+
+
+					<div class="iframe-wrap">
+						<iframe
+						id="plot-iframe"
+				    	src=" {{ url_for('static',filename='slides/DGPE/assets/html/true_data_top10_no_dropout.html') }} "
+						title="Dynamic Plot"
+						sandbox="allow-scripts allow-same-origin"
+						></iframe>
+					</div>
+				</section>
+
+
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="MonteCarlo"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="MonteCarloResults"></script>
+				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="DynamicModeling"></script>
+
+					<section id="plot-slide">
+					<div class="slide-header">
+						<h2>Dynamic Model</h2>
+						<div class="controls">
+						Hand controls are optional — clicker will still work
+						<button id="playBtn">Play</button>
+						<button id="pauseBtn">Pause</button>
+						</div>
+					</div> 
+
 
 					<div class="iframe-wrap">
 						<iframe
@@ -47,11 +74,8 @@
 						></iframe>
 					</div>
 				</section>
-  
- 
-				<script src=" {{ url_for('static',filename='slides/DGPE/js/add_video_slide.js') }} " slide_scene="Slide3"></script>
-				 
- 
+
+
 			</div>
 			</div>
 			</div>
@@ -139,45 +163,88 @@
 		</script>
 		<script>
 
-			// parent: post init only when slide is visible and wrapper non-zero
-		const iframe = document.getElementById('plot-iframe');
-		const wrapper = document.querySelector('.iframe-wrap') || iframe;
+// Parent: initialize ALL iframes with id="plot-iframe" (minimal)
+(function(){
+  const now = () => (performance.now()/1000).toFixed(3);
 
-		function postInitIfReady() {
-		const r = wrapper.getBoundingClientRect();
-		if (r.width > 0 && r.height > 0) {
-			iframe.contentWindow.postMessage({ action:'init', width:Math.floor(r.width), height:Math.floor(r.height) }, '*');
-			console.log('parent: posted init', {w:r.width,h:r.height});
-			return true;
-		}
-		console.log('parent: wrapper still zero, skipping init', {w:r.width,h:r.height});
-		return false;
-		}
+  // returns NodeList of all iframes that match the id (works even with duplicates)
+  function getAllPlotIframes() {
+    return Array.from(document.querySelectorAll('#plot-iframe'));
+  }
 
-		// call when reveal slidechanged to this slide
-		Reveal.on('slidechanged', ev => {
-		if (ev.currentSlide && ev.currentSlide.querySelector && ev.currentSlide.querySelector('#plot-iframe')) {
-			// try immediately; if wrapper 0, try again on next animation frame (small loop)
-			if (!postInitIfReady()) {
-			// small poll loop — will try a few times
-			let tries = 6;
-			(function poll() {
-				const r = wrapper.getBoundingClientRect();
-				if (r.width > 0 && r.height > 0) { postInitIfReady(); return; }
-				if (--tries <= 0) { console.warn('parent: init aborted — wrapper stayed zero'); return; }
-				requestAnimationFrame(() => setTimeout(poll, 80));
-			})();
-			}
-		}
-		});
+  // Try to post init to one iframe when its wrapper has non-zero size.
+  function postInitForOne(iframe, maxTries = 6, delay = 80) {
+    if (!iframe || iframe.dataset.plotInited === 'true') {
+      return Promise.resolve(false);
+    }
 
-		
-  
-		  
-	
+    const wrapper = iframe.closest('.iframe-wrap') || iframe.parentElement || iframe;
+    function measure() {
+      const r = wrapper.getBoundingClientRect();
+      return { w: Math.floor(r.width), h: Math.floor(r.height) };
+    }
+
+    return new Promise(resolve => {
+      let tries = maxTries;
+      (function attempt() {
+        const { w, h } = measure();
+        if (w > 0 && h > 0) {
+          iframe.contentWindow.postMessage({ action: 'init', width: w, height: h, ts: Date.now() }, '*');
+          iframe.dataset.plotInited = 'true';
+          console.log(`[PARENT ${now()}] posted init ->`, iframe, { w, h });
+          resolve(true);
+          return;
+        }
+        if (--tries <= 0) {
+          console.warn(`[PARENT ${now()}] wrapper stayed zero, giving up for`, iframe, { w, h });
+          resolve(false);
+          return;
+        }
+        // try again next tick
+        requestAnimationFrame(() => setTimeout(attempt, delay));
+      })();
+    });
+  }
+
+  // Handler for slidechanged: init all plot-iframes present in the shown slide
+  function onSlideChanged(ev) {
+    const slide = (ev && ev.currentSlide) || document.querySelector('.reveal .slides section.present');
+    if (!slide) return;
+    // find iframes in this slide that have id="plot-iframe"
+    const iframes = Array.from(slide.querySelectorAll('#plot-iframe'));
+    iframes.forEach(iframe => {
+      // try initializing (each iframe polled independently)
+      postInitForOne(iframe).then(posted => {
+        if (!posted) {
+          console.log(`[PARENT ${now()}] init not posted for`, iframe);
+        }
+      });
+    });
+  }
+
+  // Hook into Reveal
+  if (window.Reveal && typeof Reveal.on === 'function') {
+    Reveal.on('slidechanged', onSlideChanged);
+    Reveal.on('ready', (ev) => onSlideChanged({ currentSlide: ev.currentSlide }));
+    // If Reveal already initialized, call once
+    if (Reveal.getCurrentSlide) onSlideChanged({ currentSlide: Reveal.getCurrentSlide() });
+  } else {
+    // fallback: try on load
+    window.addEventListener('load', () => {
+      onSlideChanged({ currentSlide: document.querySelector('.reveal .slides section.present') });
+    });
+  }
+
+  // manual helper for debugging from parent console:
+  window.initAllPlotIframesNow = () => {
+    getAllPlotIframes().forEach(iframe => postInitForOne(iframe, 10, 50));
+    console.log(`[PARENT ${now()}] manual init triggered`);
+  };
+
+  console.log(`[PARENT ${now()}] plot-iframe multi-initializer installed`);
+})();
 		</script>
-			
-	
+
 		<script src=" {{ url_for('static',filename='slides/DGPE/js/video_slide.js') }} "></script>
 		</body>
 	</html>
