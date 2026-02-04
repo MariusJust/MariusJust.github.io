@@ -16,3 +16,4 @@ def neuralnet():
 @app.route('/DGPE_Køge')
 def dgpe_koege():
     return render_template("DGPE.html")
+
