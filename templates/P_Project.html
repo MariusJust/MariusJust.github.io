@@ -1,0 +1,316 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Title</title>
+
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/P_Project/dist/reset.css') }}">
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/P_Project/dist/reveal.css') }}">
+		<link rel="stylesheet" href=" {{ url_for('static',filename='slides/P_Project/dist/theme/white.css') }}">
+
+
+		<!-- Theme used for syntax highlighted code -->
+				<link rel="stylesheet" href=" {{ url_for('static',filename='slides/P_Project/plugin/highlight/monokai.css') }}">
+	</head> 
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				 
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Title"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Motivation"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Motivation1"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Motivation2"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Motivation4"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Data"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Model"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="NN"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="NN2"></script>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Training"></script>
+				
+				<!-- Global Model  -->
+				<section id="plot-slide">
+					<div class="slide-header">
+						<h2>Global Model</h2>
+						<div class="controls">
+						Hand controls are optional — clicker will still work
+						<button id="playBtn">Play</button>
+						<button id="pauseBtn">Pause</button>
+						</div>
+					</div> 
+					
+					<div class="iframe-wrap">
+						<iframe
+						id="plot-iframe"
+				    	src="{{ url_for('static',filename='slides/P_Project/assets/html/mean_surface_no_data_web.html') }}"
+						title="Dynamic Plot"
+						sandbox="allow-scripts allow-same-origin"
+						></iframe>
+					</div>
+				</section>
+				<script src=" {{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Regional_Model"></script>
+				<!-- Europe -->
+					<section id="plot-slide">
+					<div class="slide-header">
+						<h2>Europe</h2>
+						<div class="controls">
+						Hand controls are optional — clicker will still work
+						<button id="playBtn">Play</button>
+						<button id="pauseBtn">Pause</button>
+						</div>
+					</div> 
+
+					<div class="iframe-wrap">
+						<iframe
+						id="plot-iframe"
+				    	src="{{ url_for('static',filename='slides/P_Project/assets/html/Europe_web.html') }}"
+						title="Dynamic Plot"
+						sandbox="allow-scripts allow-same-origin"
+						></iframe>
+					</div>
+					</section>
+
+					<!-- Africa -->
+					<section id="plot-slide">
+					<div class="slide-header">
+						<h2>Africa</h2>
+						<div class="controls">
+						Hand controls are optional — clicker will still work
+						<button id="playBtn">Play</button>
+						<button id="pauseBtn">Pause</button>
+						</div>
+					</div> 
+
+					<div class="iframe-wrap">
+						<iframe
+						id="plot-iframe"
+				    	src="{{ url_for('static',filename='slides/P_Project/assets/html/Africa_web.html') }}"
+						title="Dynamic Plot"
+						sandbox="allow-scripts allow-same-origin"
+						></iframe>
+					</div>
+					</section>
+
+					<!-- Asia -->
+					<section id="plot-slide">
+					<div class="slide-header">
+						<h2>Asia</h2>
+						<div class="controls">
+						Hand controls are optional — clicker will still work
+						<button id="playBtn">Play</button>
+						<button id="pauseBtn">Pause</button>
+						</div>
+					</div> 
+
+					<div class="iframe-wrap">
+						<iframe
+						id="plot-iframe"
+				    	src="{{ url_for('static',filename='slides/P_Project/assets/html/Asia_web.html') }}"
+						title="Dynamic Plot"
+						sandbox="allow-scripts allow-same-origin"
+						></iframe>
+					</div>
+					</section>
+
+
+
+
+
+
+					
+
+  
+
+				<script src="{{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="MonteCarlo"></script>
+				<script src="{{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="MonteCarloResults"></script>
+   
+
+
+				<!-- <script src="{{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="DynamicModeling"></script>
+
+				<script src="{{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="twoDSlides"></script> -->
+   
+				<script src="{{ url_for('static',filename='slides/P_Project/js/add_video_slide.js') }}" slide_scene="Conclusion"></script>
+			 
+				 
+ 
+			</div>
+			</div>
+			</div>
+		</div>
+
+		<style>
+			/* Make the section a column layout so header + iframe stack */
+			#plot-slide {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			box-sizing: border-box;
+			}
+
+			/* make header compact: fixed height, remove h2 margins */
+			.slide-header{
+			display:flex;
+			justify-content:space-between;
+			align-items: center;
+			height: 72px;            /* reserve fixed header height */
+			min-height: 56px;
+			flex: 0 0 72px;         /* do not stretch */
+			padding: 0 0.4rem;
+			
+			box-sizing: border-box;
+			}
+
+			/* tighten h2 so it doesn't push layout */
+			.slide-header h2{
+			margin: 0;
+			font-size: 2.2rem;      /* reduce if too large */
+			line-height: 1;
+			}
+
+			/* iframe wrapper fills the remaining space */
+			.iframe-wrap {
+			flex: 1 1 auto;         /* take the remaining vertical space */
+			display: flex;
+			justify-content: center;
+			width: 100%;
+			box-sizing: border-box;
+			overflow: hidden;
+			padding-top: 0.5rem;
+			height: 100%;
+			}
+
+			/* iframe itself fills wrapper exactly */
+			#plot-iframe {
+			width: 100%;
+			height: 100%;
+			border: none;
+			border-radius: 6px;
+			display: block;
+			background: #FFFFFF;
+			}
+			</style>
+
+
+
+		<script src="{{ url_for('static',filename='slides/P_Project/dist/reveal.js') }}"></script>
+		<script src="{{ url_for('static',filename='slides/P_Project/plugin/notes/notes.js') }}"></script>
+		<script src="{{ url_for('static',filename='slides/P_Project/plugin/markdown/markdown.js') }}"></script>
+		<script src="{{ url_for('static',filename='slides/P_Project/plugin/highlight/highlight.js') }}"></script>
+		<script>
+		
+			const isMobile = /(iphone|ipod|ipad|android)/gi.test( navigator.userAgent ) ||
+				( navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1 ); // iPadOS
+				
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: false,
+				transition: 'none',
+				backgroundTransition: 'none',	
+				progress: false,	
+				autoPlayMedia: false,	
+				controls: isMobile,
+				controlsLayout: 'edges',
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			
+		</script>
+		<script>
+// Parent: initialize ALL iframes with id="plot-iframe" (minimal)
+(function(){
+  const now = () => (performance.now()/1000).toFixed(3);
+
+  // returns NodeList of all iframes that match the id (works even with duplicates)
+  function getAllPlotIframes() {
+    return Array.from(document.querySelectorAll('#plot-iframe'));
+  }
+
+  // Try to post init to one iframe when its wrapper has non-zero size.
+  function postInitForOne(iframe, maxTries = 6, delay = 80) {
+    if (!iframe || iframe.dataset.plotInited === 'true') {
+      return Promise.resolve(false);
+    }
+
+    const wrapper = iframe.closest('.iframe-wrap') || iframe.parentElement || iframe;
+    function measure() {
+      const r = wrapper.getBoundingClientRect();
+      return { w: Math.floor(r.width), h: Math.floor(r.height) };
+    }
+
+    return new Promise(resolve => {
+      let tries = maxTries;
+      (function attempt() {
+        const { w, h } = measure();
+        if (w > 0 && h > 0) {
+          iframe.contentWindow.postMessage({ action: 'init', width: w, height: h, ts: Date.now() }, '*');
+          iframe.dataset.plotInited = 'true';
+          console.log(`[PARENT ${now()}] posted init ->`, iframe, { w, h });
+          resolve(true);
+          return;
+        }
+        if (--tries <= 0) {
+          console.warn(`[PARENT ${now()}] wrapper stayed zero, giving up for`, iframe, { w, h });
+          resolve(false);
+          return;
+        }
+        // try again next tick
+        requestAnimationFrame(() => setTimeout(attempt, delay));
+      })();
+    });
+  }
+
+  // Handler for slidechanged: init all plot-iframes present in the shown slide
+  function onSlideChanged(ev) {
+    const slide = (ev && ev.currentSlide) || document.querySelector('.reveal .slides section.present');
+    if (!slide) return;
+    // find iframes in this slide that have id="plot-iframe"
+    const iframes = Array.from(slide.querySelectorAll('#plot-iframe'));
+    iframes.forEach(iframe => {
+      // try initializing (each iframe polled independently)
+      postInitForOne(iframe).then(posted => {
+        if (!posted) {
+          console.log(`[PARENT ${now()}] init not posted for`, iframe);
+        }
+      });
+    });
+  }
+
+  // Hook into Reveal
+  if (window.Reveal && typeof Reveal.on === 'function') {
+    Reveal.on('slidechanged', onSlideChanged);
+    Reveal.on('ready', (ev) => onSlideChanged({ currentSlide: ev.currentSlide }));
+    // If Reveal already initialized, call once
+    if (Reveal.getCurrentSlide) onSlideChanged({ currentSlide: Reveal.getCurrentSlide() });
+  } else {
+    // fallback: try on load
+    window.addEventListener('load', () => {
+      onSlideChanged({ currentSlide: document.querySelector('.reveal .slides section.present') });
+    });
+  }
+
+  // manual helper for debugging from parent console:
+  window.initAllPlotIframesNow = () => {
+    getAllPlotIframes().forEach(iframe => postInitForOne(iframe, 10, 50));
+    console.log(`[PARENT ${now()}] manual init triggered`);
+  };
+
+  console.log(`[PARENT ${now()}] plot-iframe multi-initializer installed`);
+})();
+
+
+		
+  
+		  
+	
+		</script>
+			
+
+		<script src="{{ url_for('static',filename='slides/P_Project/js/video_slide.js') }}"></script>
+		</body>
+	</html>
+	  
