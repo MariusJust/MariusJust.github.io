@@ -17,3 +17,7 @@ def neuralnet():
 def dgpe_koege():
     return render_template("DGPE.html")
 
+@app.route('/P_Project')
+def p_project():
+    return render_template("P_Project.html")
+
