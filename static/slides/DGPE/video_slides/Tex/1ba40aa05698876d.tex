@@ -1,0 +1,39 @@
+\documentclass[preview]{standalone}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+    % Basic packages for symbols & math
+    \usepackage{amsmath,amssymb,mathtools,stmaryrd}
+    % icon fonts (may require texlive-fonts-extra / fontawesome package)
+    \usepackage{marvosym}
+    \usepackage{fontawesome}
+    % color definitions
+    \usepackage{xcolor}
+    \definecolor{bordeaux}{RGB}{128,0,32}
+    \definecolor{CustomBlue}{RGB}{0,61,115}
+    % a handy shadecolor similar to your LaTeX preamble (approx of gray!90)
+    \colorlet{shadecolor}{gray!0.90}
+    % helpful macros you defined
+    \newcommand{\comm}[2]{\left\llbracket#1,#2\right\rrbracket}
+    \newcommand{\bra}[1]{\left\langle #1\right|}
+    \newcommand{\ket}[1]{\left|#1\right\rangle}
+    \newcommand{\braket}[2]{\left\langle #1\middle|#2\right\rangle}
+    \newcommand{\ketbra}[2]{\left|#1\middle\rangle\!\middle\langle#2\right|}
+    \newcommand{\braopket}[3]{\left\langle #1\middle|#2\middle|#3\right\rangle}
+    \newcommand{\proj}[1]{\left| #1\middle\rangle\!\middle\langle#1\right|}
+    \newcommand{\abs}[1]{\left| #1 \right|}
+    \newcommand{\norm}[1]{\left\| #1 \right\|}
+    \newcommand{\Tr}{\mathrm{Tr}}
+    % citation-color helpers for use inside Tex fragments (if needed)
+    \newcommand{\citepcolor}[1]{\textcolor{shadecolor}{\citep{#1}}}
+    \newcommand{\citecolor}[1]{\textcolor{shadecolor}{\cite{#1}}}
+
+\begin{document}
+
+    \fontfamily{lmss}\selectfont
+
+\begin{center}
+\begin{block}{Motivation} \begin{itemize} \item Empirical literature on the climate-growth relationship often relies on strong assumptions on the functional form \end{itemize}\end{block}
+\end{center}
+\end{document}
