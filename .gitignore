@@ -1,1 +1,6 @@
+# Node dependencies
+node_modules/
+**/node_modules/
 
+# If you also want to avoid large slide build caches:
+static/slides/**/media.bak/
