@@ -21,3 +21,6 @@ def dgpe_koege():
 def p_project():
     return render_template("P_Project.html")
 
+@app.route('/First_Year')
+def first_year():
+    return render_template("First_Year.html")
