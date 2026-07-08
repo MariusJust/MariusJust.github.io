@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <!-- Page Title -->
+  <div class="page-title dark-background">
+    <div class="container d-lg-flex justify-content-between align-items-center">
+      <h1 class="mb-2 mb-lg-0">Job Bank - Ph.d. Positions</h1>
+      <nav class="breadcrumbs">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li class="current">Job Bank</li>
+        </ol>
+      </nav>
+    </div>
+  </div><!-- End Page Title -->
+
+  <!-- Job Bank Section -->
+  <section id="jobbank" class="section">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title mb-4">
+        <h2>Current Openings</h2>
+        <p>PhD-level opportunities in quantitative finance, economics, data science, and academia across Denmark and major European hubs. Listings are updated manually — deadlines shown are application closing dates.</p>
+      </div>
+
+      {% if jobs %}
+      <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+        <!-- Filter Buttons -->
+        <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-finance">Finance</li>
+          <li data-filter=".filter-economics">Economics</li>
+          <li data-filter=".filter-data-tech">Data &amp; Tech</li>
+          <li data-filter=".filter-academia">Academia</li>
+        </ul><!-- End Filter Buttons -->
+
+        <!-- Job Cards -->
+        <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+
+          {% for job in jobs %}
+          {% set cat_class = {
+            'Finance': 'filter-finance',
+            'Economics': 'filter-economics',
+            'Data & Tech': 'filter-data-tech',
+            'Academia': 'filter-academia'
+          }.get(job.category, 'filter-other') %}
+          <div class="col-lg-4 col-md-6 isotope-item {{ cat_class }}">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-header bg-transparent border-bottom d-flex justify-content-between align-items-start pt-3 pb-2">
+                <div>
+                  <span class="fw-semibold text-primary">{{ job.company }}</span><br>
+                  <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>{{ job.location }}</small>
+                </div>
+                <span class="badge
+                  {% if job.category == 'Finance' %}bg-success
+                  {% elif job.category == 'Economics' %}bg-warning text-dark
+                  {% elif job.category == 'Data & Tech' %}bg-info text-dark
+                  {% else %}bg-secondary
+                  {% endif %}
+                  ms-2 flex-shrink-0">{{ job.category }}</span>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title mb-2">{{ job.title }}</h5>
+                <p class="card-text text-muted small">{{ job.description }}</p>
+              </div>
+              <div class="card-footer bg-transparent border-top d-flex justify-content-between align-items-center">
+                <small class="text-muted"><i class="bi bi-calendar3 me-1"></i>Deadline: {{ job.deadline }}</small>
+                <a href="{{ job.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-primary">Apply &rarr;</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div><!-- End Job Cards -->
+      </div><!-- End Isotope Layout -->
+
+      {% else %}
+      <div class="text-center py-5 text-muted" data-aos="fade-up">
+        <i class="bi bi-briefcase fs-1 d-block mb-3"></i>
+        <p class="fs-5">No active listings right now — check back soon.</p>
+      </div>
+      {% endif %}
+
+    </div>
+  </section><!-- End Job Bank Section -->
+
+  <!-- Company Directory Section -->
+  <section id="companies" class="section bg-light">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title mb-4">
+        <h2>Company Directory</h2>
+        <p>A curated list of employers that regularly hire PhD-level candidates. Use these links to track open positions directly on company career pages.</p>
+      </div>
+
+      <div class="accordion" id="companyAccordion">
+
+        {% set categories = ['Finance', 'Economics', 'Data & Tech', 'Academia'] %}
+        {% for cat in categories %}
+        {% set cat_id = cat | replace(' ', '') | replace('&', '') %}
+        {% set cat_companies = companies | selectattr('category', 'equalto', cat) | list %}
+        {% if cat_companies %}
+        <div class="accordion-item border-0 mb-2 shadow-sm">
+          <h2 class="accordion-header" id="heading{{ cat_id }}">
+            <button class="accordion-button {% if not loop.first %}collapsed{% endif %} fw-semibold" type="button"
+              data-bs-toggle="collapse" data-bs-target="#collapse{{ cat_id }}"
+              aria-expanded="{{ 'true' if loop.first else 'false' }}"
+              aria-controls="collapse{{ cat_id }}">
+              {% if cat == 'Finance' %}<i class="bi bi-bank me-2"></i>
+              {% elif cat == 'Economics' %}<i class="bi bi-graph-up me-2"></i>
+              {% elif cat == 'Data & Tech' %}<i class="bi bi-cpu me-2"></i>
+              {% else %}<i class="bi bi-mortarboard me-2"></i>
+              {% endif %}
+              {{ cat }} <span class="badge bg-secondary ms-2 fw-normal">{{ cat_companies | length }}</span>
+            </button>
+          </h2>
+          <div id="collapse{{ cat_id }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}"
+            aria-labelledby="heading{{ cat_id }}" data-bs-parent="#companyAccordion">
+            <div class="accordion-body">
+              <div class="row gy-2">
+                {% for company in cat_companies %}
+                <div class="col-lg-4 col-md-6">
+                  <a href="{{ company.url }}" target="_blank" rel="noopener noreferrer"
+                    class="d-flex align-items-center text-decoration-none text-dark company-link p-2 rounded">
+                    <i class="bi bi-box-arrow-up-right me-2 text-primary small flex-shrink-0"></i>
+                    <span class="small">
+                      <span class="fw-medium">{{ company.name }}</span>
+                      <span class="text-muted ms-1">— {{ company.hq }}</span>
+                    </span>
+                  </a>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+      </div><!-- End Accordion -->
+    </div>
+  </section><!-- End Company Directory Section -->
+
+  <style>
+    .company-link:hover { background-color: rgba(0,114,255,0.06); }
+    .portfolio-filters { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.5rem; }
+    .portfolio-filters li { cursor: pointer; padding: 6px 18px; border: 1px solid #dee2e6; border-radius: 50px; font-size: .875rem; transition: all .2s; }
+    .portfolio-filters li.filter-active,
+    .portfolio-filters li:hover { background-color: #0d6efd; border-color: #0d6efd; color: #fff; }
+  </style>
+
+{% endblock %}

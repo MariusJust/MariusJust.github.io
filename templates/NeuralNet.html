@@ -16,73 +16,104 @@
     </div>
   </div><!-- End Page Title -->
 
-  <!-- Portfolio Details Section -->
+  <!-- Intro -->
+  <div class="container section-title" data-aos="fade-up">
+    <p>
+      Estimated climate response surfaces from the paper
+      <em>A Neural Network Approach to the Climate-Growth Relationship</em>.
+      Each surface is the architecture selected by the Bayesian information criterion
+      (a single hidden layer with two neurons), fitted with country and time fixed effects
+      and country-specific trends concentrated out. Surfaces show the climate contribution
+      to growth, centred at the sample-mean climate.
+      <b>Drag to rotate and scroll to zoom.</b>
+    </p>
+  </div>
 
-   <div class="container section-title" data-aos="fade-up">
-      <h2>Global ensemble model  </h2>
-      <p> Surface is created by averaging 5 best models <b> Please, drag and play with the surface! </b> </p>
-       <iframe
-        src="static/assets/html/mean_surface_no_data_web.html"
-        width="100%" height="600"
-        style="border:none">
-      </iframe>
-    </div><!-- End Section Title -->
+  <!-- Global -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Global model</h2>
+    <p>BIC-selected network. The response is approximately linear at low temperatures and
+       turns concave as temperature rises, with a higher growth-maximizing temperature than
+       the quadratic benchmark.</p>
+    <iframe
+      src="static/assets/html/global_within2_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
+  <!-- Regional models -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Regional model: Europe</h2>
+    <p>Approximately linear, weakly positive temperature response; little role for precipitation.</p>
+    <iframe
+      src="static/assets/html/Europe_within2_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Regional model: Africa</h2>
+    <p>Negative temperature response under dry conditions, mitigated at higher precipitation.</p>
+    <iframe
+      src="static/assets/html/Africa_within2_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
-     <div class="container section-title" data-aos="fade-up">
-      <h2>Regional model: Europe</h2>
-       <iframe
-        src="static/assets/html/Europe_web.html"
-        width="100%" height="600"
-        style="border:none">
-      </iframe>
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Regional model: Asia</h2>
+    <p>Concave response: moderate warming helps cooler economies, while further warming reduces growth.</p>
+    <iframe
+      src="static/assets/html/Asia_within2_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
-    </div><!-- End Section Title -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Regional model: Oceania</h2>
+    <p>Broadly positive but imprecisely estimated — few countries and low data support, so interpret with caution.</p>
+    <iframe
+      src="static/assets/html/Oceania_within2_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
-<div class="container section-title" data-aos="fade-up">
-      <h2>Regional model: Africa</h2>
-       <iframe
-        src="static/assets/html/Africa_web.html"
-        width="100%" height="600"
-        style="border:none">
-      </iframe>
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Regional model: Americas</h2>
+    <p>Concave response peaking near 14&nbsp;&deg;C; the region spans a wide climate range, so the extremes are sparsely supported.</p>
+    <iframe
+      src="static/assets/html/Americas_within2_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
-    </div><!-- End Section Title -->
+  <!-- Income groups -->
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Income group: Low-income</h2>
+    <p>Sample split at the median of GDP per capita. Growth falls under hot, dry conditions;
+       higher precipitation partly offsets the effect.</p>
+    <iframe
+      src="static/assets/html/income_low_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Regional model: Asia</h2>
-       <iframe
-        src="static/assets/html/Asia_web.html"
-        width="100%" height="600"
-        style="border:none">
-      </iframe>
-
-    </div><!-- End Section Title -->
-
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Regional model: Oceania</h2>
-       <iframe
-        src="static/assets/html/Oceania_web.html"
-        width="100%" height="600"
-        style="border:none">
-      </iframe>
-
-    </div><!-- End Section Title -->
-
-    <div class="container section-title" data-aos="fade-up">
-      <h2>Regional model: Americas</h2>
-       <iframe
-        src="static/assets/html/Americas_web.html"
-        width="100%" height="600"
-        style="border:none">
-      </iframe>
-
-    </div><!-- End Section Title -->
-
+  <div class="container section-title" data-aos="fade-up">
+    <h2>Income group: High-income</h2>
+    <p>Nearly flat across the climate space — richer economies appear less sensitive to the
+       temperature and precipitation variation observed in the sample.</p>
+    <iframe
+      src="static/assets/html/income_high_web.html"
+      width="100%" height="600"
+      style="border:none">
+    </iframe>
+  </div><!-- End Section Title -->
 
 {% endblock %}
-
- 
-
- 
